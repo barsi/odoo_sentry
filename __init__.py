@@ -40,9 +40,9 @@ _logger = logging.getLogger(__name__)
 
 
 CLIENT_DSN = config.get('sentry_client_dsn', '').strip()
-ENABLE_LOGGING = config.get('sentry_enable_logging', True)
-ALLOW_ORM_WARNING = config.get('sentry_allow_orm_warning', True)
-INCLUDE_USER_CONTEXT = config.get('sentry_include_context', True)
+ENABLE_LOGGING = config.get('sentry_enable_logging', False)
+ALLOW_ORM_WARNING = config.get('sentry_allow_orm_warning', False)
+INCLUDE_USER_CONTEXT = config.get('sentry_include_context', False)
 
 def get_user_context():
     '''
