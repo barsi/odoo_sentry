@@ -2,6 +2,8 @@
 
 an Odoo V8.0 module that connects your odoo deployment with [sentry](https://www.getsentry.com)
 
+![Screen shot](screenshot.png?raw=true "Sample Screen")
+
 ## Installation
 
 ### On Odoo server
