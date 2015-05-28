@@ -49,6 +49,8 @@ def get_user_context():
         get the current user context, if possible
     '''
     cxt = {}
+    if not request:
+        return cxt
     session = getattr(request, 'session', {})
     cxt.update({
         'session': {
