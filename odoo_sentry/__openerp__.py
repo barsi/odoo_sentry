@@ -24,6 +24,7 @@
     'version': '1.0',
     'author': 'Mohammed Barsi',
     'sequence': 4,
+    'category': 'Extra Tools',
     'summary': 'Exceptions tracker',
     'description':
         """
