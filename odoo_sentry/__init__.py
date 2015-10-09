@@ -49,9 +49,10 @@ def get_user_context():
         get the current user context, if possible
     '''
     cxt = {}
-    if not request:
+    try:
+        session = getattr(request, 'session', {})
+    except RuntimeError, e:
         return cxt
-    session = getattr(request, 'session', {})
     cxt.update({
         'session': {
             'context': session.get('context', {}),
@@ -77,6 +78,11 @@ def serialize_exception(e):
         if INCLUDE_USER_CONTEXT:
             client.extra_context(get_user_context())
         client.captureException(sys.exc_info())
+        return openerp.http.serialize_exception(e)
+    elif isinstance(e, Exception):
+        if INCLUDE_USER_CONTEXT:
+            client.extra_context(get_user_context())
+            client.captureException(sys.exc_info())
     return openerp.http.serialize_exception(e)
 
 
