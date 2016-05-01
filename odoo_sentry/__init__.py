@@ -43,6 +43,8 @@ CLIENT_DSN = config.get('sentry_client_dsn', '').strip()
 ENABLE_LOGGING = config.get('sentry_enable_logging', False)
 ALLOW_ORM_WARNING = config.get('sentry_allow_orm_warning', False)
 INCLUDE_USER_CONTEXT = config.get('sentry_include_context', False)
+AUTO_LOG_STACKS = config.get('auto_log_stacks', False)
+
 
 def get_user_context():
     '''
@@ -97,8 +99,7 @@ class ContextSentryHandler(SentryHandler):
         super(ContextSentryHandler, self).emit(rec)
 
 
-
-client = Client(CLIENT_DSN)
+client = Client(CLIENT_DSN, auto_log_stacks=AUTO_LOG_STACKS)
 
 
 if ENABLE_LOGGING:
@@ -112,7 +113,9 @@ if ALLOW_ORM_WARNING:
     openerp.addons.report.controllers.main._serialize_exception = serialize_exception
 
 # wrap the main wsgi app
-openerp.service.wsgi_server.application = Sentry(openerp.service.wsgi_server.application, client=client)
+openerp.service.wsgi_server.application = Sentry(
+    openerp.service.wsgi_server.application, client=client
+)
 
 if INCLUDE_USER_CONTEXT:
     client.extra_context(get_user_context())
